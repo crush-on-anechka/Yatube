@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Об авторе
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <div class="row">
+      <aside class="col-12 col-md-4">
+        <img src="{% static 'img/avatar.png' %}"
+        width="400" height="400"
+        class="d-inline-block align-top" alt="">
+      </aside>
+      <article class="col-12 col-md-8">
+        <h2>Привет!</h2>
+        <p>На фото я ем куриные крылышки в соусе 11 февраля 2014 года.
+          Тогда я и представить себе не мог, как эта фотография мне пригодится 8 лет спустя... </p>
+      </article>
+    </div>     
+  </div>
+{% endblock %}

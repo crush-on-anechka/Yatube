@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Навыки
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <div class="row">
+      <aside class="col-12 col-md-4">
+        <img src="{% static 'img/elite.jpg' %}"
+        width="400" height="400"
+        class="d-inline-block align-top" alt="">
+      </aside>
+      <article class="col-12 col-md-8">
+        <h2>Что я умею</h2>
+        <ul>
+          <li>
+            Python
+          </li>
+          <li>
+            Django <span class=text-muted>(Не очень)</span>
+          </li>
+          <li>
+            ???
+          </li>
+          <li>
+            Profit!
+          </li>
+        </ul>
+      </article>
+    </div>     
+  </div>
+{% endblock %}
