@@ -140,7 +140,7 @@ class PostPagesTests(TestCase):
             response.context['author'].username, self.author.username
         )
         self.assertEqual(
-            response.context['quantity'], 1
+            response.context['posts_count'], 1
         )
         self.assertEqual(
             response.context['page_obj'][0].text, self.post.text
@@ -162,7 +162,7 @@ class PostPagesTests(TestCase):
             'posts:post_detail',
             kwargs={'post_id': self.post.id}
         ))
-        self.assertEqual(response.context['quantity'], 1)
+        self.assertEqual(response.context['posts_count'], 1)
         self.assertEqual(response.context['edit_visible'], True)
         self.assertEqual(response.context['post'].text, self.post.text)
         self.assertEqual(

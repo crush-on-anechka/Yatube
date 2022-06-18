@@ -28,7 +28,6 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.select_related('author', 'group')
-    quantity = len(posts)
     following = False
     if request.user.is_authenticated:
         following = Follow.objects.filter(
@@ -37,7 +36,7 @@ def profile(request, username):
         )
     context = {
         'author': author,
-        'quantity': quantity,
+        'posts_count': posts.count(),
         'following': following,
         'my_page': request.user != author,
         'page_obj': paginator(request, posts)
@@ -53,13 +52,12 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     posts = post.author.posts.select_related('author', 'group')
     comments = post.comments.select_related('author', 'post')
-    quantity = len(posts)
     edit_visible = False
     if post.author == request.user:
         edit_visible = True
     context = {
         'post': post,
-        'quantity': quantity,
+        'posts_count': posts.count(),
         'edit_visible': edit_visible,
         'form': form,
         'comments': comments
@@ -117,11 +115,7 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     user = get_object_or_404(User, username=request.user)
-    follows = user.follower.select_related('author')
-    authors = []
-    for follow in follows:
-        authors.append(follow.author)
-    posts = Post.objects.filter(author__in=authors)
+    posts = Post.objects.filter(author__following__user=user)
     context = {
         'page_obj': paginator(request, posts)
     }

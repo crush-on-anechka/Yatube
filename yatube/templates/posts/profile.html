@@ -5,7 +5,7 @@
 {% block content %}
   <div class="mb-5">
     <h1> Все посты пользователя {{ author.get_full_name }} </h1>
-    <h3> Всего постов: {{ quantity }} </h3>
+    <h3> Всего постов: {{ posts_count }} </h3>
     {% if my_page %}
       {% if following %}
       <a

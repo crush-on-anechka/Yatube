@@ -9,7 +9,7 @@
           <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
             Предыдущая
           </a>
-        </li>
+        </li> 
       {% endif %}
       {% for i in page_obj.paginator.page_range %}
         {% if page_obj.number == i %}
