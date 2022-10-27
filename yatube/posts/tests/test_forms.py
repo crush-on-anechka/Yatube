@@ -142,6 +142,7 @@ class PostCommentFormTests(TestCase):
             author=cls.user,
             text='TestText',
         )
+        cls.form_data = {'text': 'TestComment'}
 
     def setUp(self):
         self.guest_client = Client()
@@ -157,12 +158,12 @@ class PostCommentFormTests(TestCase):
                 'posts:add_comment',
                 kwargs={'post_id': self.post.id}
             ),
-            data={'text': 'TestComment'},
+            data=self.form_data,
             follow=True
         )
         self.assertTrue(
             Comment.objects.filter(
-                text='TestComment',
+                text=self.form_data['text'],
                 post=self.post
             ).exists()
         )
@@ -181,7 +182,7 @@ class PostCommentFormTests(TestCase):
                 'posts:add_comment',
                 kwargs={'post_id': self.post.id}
             ),
-            data={'text': 'TestComment'},
+            data=self.form_data,
             follow=True
         )
         self.assertEqual(Comment.objects.count(), comments_count)

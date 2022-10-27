@@ -220,6 +220,10 @@ class PostPagesTests(TestCase):
         url_edit_redirect = '/posts/9999/'
         self.assertRedirects(response, url_edit_redirect)
 
+    def test_image_is_stored_in_local_folder(self):
+        """Загружаемая картинка сохраняется в папке media/posts."""
+        self.assertTrue(Post.objects.get(image__startswith='posts/'))
+
 
 class PaginatorViewsTest(TestCase):
     @classmethod

@@ -37,7 +37,8 @@ class PostURLTests(TestCase):
             '/profile/PostAuthor/': self.guest_client,
             '/posts/9999/': self.guest_client,
             '/posts/9999/edit/': self.authorized_author,
-            '/create/': self.authorized_random
+            '/create/': self.authorized_random,
+            '/follow/': self.authorized_random
         }
         for url, client in url.items():
             with self.subTest(url=url, client=client):
@@ -58,7 +59,8 @@ class PostURLTests(TestCase):
             '/posts/9999/': 'posts/post_detail.html',
             '/posts/9999/edit/': 'posts/create_post.html',
             '/create/': 'posts/create_post.html',
-            '/unexisting_page/': 'core/404.html'
+            '/unexisting_page/': 'core/404.html',
+            '/follow/': 'posts/follow.html',
         }
         for address, template in templates_url_names.items():
             with self.subTest(address=address):
@@ -83,5 +85,26 @@ class PostURLTests(TestCase):
         """URL-адрес страницы редактирования поста переадресует
         не автора поста на страницу информации о посте."""
         response = self.authorized_random.get('/posts/9999/edit/')
+        url_edit_redirect = '/posts/9999/'
+        self.assertRedirects(response, url_edit_redirect)
+
+    def test_follow_url_redirects_to_author_profile(self):
+        """URL-адрес функции подписки на автора переадресует
+        на страницу профиля автора поста."""
+        response = self.authorized_random.get('/profile/PostAuthor/follow/')
+        url_edit_redirect = '/profile/PostAuthor/'
+        self.assertRedirects(response, url_edit_redirect)
+
+    def test_unfollow_url_redirects_to_author_profile(self):
+        """URL-адрес функции отписки от автора переадресует
+        на страницу профиля автора поста."""
+        response = self.authorized_random.get('/profile/PostAuthor/unfollow/')
+        url_edit_redirect = '/profile/PostAuthor/'
+        self.assertRedirects(response, url_edit_redirect)
+
+    def test_add_comment_url_redirects_to_post_details(self):
+        """URL-адрес функции добавления комментария
+        переадресует на страницу информации о посте."""
+        response = self.authorized_random.get('/posts/9999/comment/')
         url_edit_redirect = '/posts/9999/'
         self.assertRedirects(response, url_edit_redirect)

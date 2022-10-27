@@ -45,15 +45,28 @@ class PostModelTest(TestCase):
                 self.assertEqual(expected_value, str(field))
 
     def test_post_models_have_correct_verbose_names(self):
-        """У полей модели Post корректно работают verbose names."""
+        """У моделей корректно работают verbose names."""
         post = PostModelTest.post
-        verboses = {
-            'text': 'Текст поста',
-            'pub_date': 'Дата публикации',
-            'author': 'Автор поста',
-            'group': 'Группа, к которой относится пост'
-        }
-        for field, expected_value in verboses.items():
+        group = PostModelTest.group
+        comment = PostModelTest.comment
+        follow = PostModelTest.follow
+        verboses = [
+            (post, 'text', 'Текст поста'),
+            (post, 'pub_date', 'Дата публикации'),
+            (post, 'author', 'Автор поста'),
+            (post, 'group', 'Группа, к которой относится пост'),
+            (post, 'image', 'Картинка'),
+            (group, 'title', 'title'),
+            (group, 'slug', 'identificator'),
+            (group, 'description', 'description'),
+            (comment, 'post', 'Пост'),
+            (comment, 'text', 'Текст комментария'),
+            (comment, 'created', 'Дата комментария'),
+            (comment, 'author', 'Автор поста'),
+            (follow, 'user', 'Подписчик'),
+            (follow, 'author', 'Автор'),
+        ]
+        for model, field, expected_value in verboses:
             with self.subTest(field=field):
                 self.assertEqual(
-                    post._meta.get_field(field).verbose_name, expected_value)
+                    model._meta.get_field(field).verbose_name, expected_value)
